@@ -18,5 +18,5 @@ This assistant is tailored for **TechNova Solutions**, a fictional software comp
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/Technical-Support-Chatbot.git
+git clone https://github.com/Ayesha86527/Technical-Support-Chatbot.git
 cd Technical-Support-Chatbot
