@@ -1,7 +1,10 @@
 import google.generativeai as genai
 import os
+import streamlit as st
 
-genai.configure(api_key="GEMINI_API_KEY")
+api_key=st.secrets["GEMINI_API_KEY]
+
+genai.configure(api_key=api_key)
 
 generation_config={
     "temperature":0.75,
@@ -48,22 +51,37 @@ model=genai.GenerativeModel(
 
 history=[]
 
-while True:
-    user_input=input("You: ")
+def chat_completion(user_input):
     chat_session=model.start_chat(
     history=history
     )
-
     response=chat_session.send_message(user_input)
     model_response=response.text
-
-    print(model_response)
-    print()
-
+    st.write(model_response)
     history.append({"role":"user", "parts":[user_input]})
     history.append({"role":"model", "parts":[model_response]})
+    
+
+st.title("Technical Support Chatbot")
+
+for msg in st.session_state.messages:
+    if msg["role"] == "system":
+        continue 
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
+
+user_input=st.chat_input("Type here...")
+
+if user_input:
+        with st.chat_message("user"):
+            st.markdown(user_input)
+        response=chat_completion(user_input)
+else:
+    st.warning("No input was provided")
+
 
 
 
     
+
 
